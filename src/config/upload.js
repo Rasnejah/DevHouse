@@ -9,7 +9,8 @@ export default {
     destination: path.resolve( __dirname, '..', '..', 'uploads' ),
     filename: (req, file, cb) => {
       const ext  = path.extname(file.originalname)
-      const name = path.basename(file.originalname, ext) 
+      let name = path.basename(file.originalname, ext)
+      name = name.split(' ').join('')
 
       cb(null, `${name}-${Date.now()}${ext}`)
     }
