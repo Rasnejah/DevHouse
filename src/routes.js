@@ -7,6 +7,7 @@ import uploadConfig from "./config/upload"
 
 import SessionController from "./controllers/SessionController"
 import HouseController from "./controllers/HouseController"
+import DashbordController from "./controllers/DashbordController"
 
 const routes = new Router()
 const upload = multer(uploadConfig)
@@ -17,6 +18,8 @@ routes.get( '/houses', HouseController.index )
 routes.post( '/houses', upload.single('thumbnail'), HouseController.store )
 routes.put( '/houses/:house_id',upload.single( 'thumbnail'), HouseController.update )
 routes.delete( '/houses', HouseController.destroy )
+
+routes.get( '/dashboard', DashbordController.show )
 
 
 export default routes
