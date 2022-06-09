@@ -8,6 +8,7 @@ class ReserveController{
 
     const { user_id } = req.headers
     const { date, house_id } = req.body
+
     if( date === "" ){
 
       return res.status( 422 ).json({ message: "preencha o campo data!"})
@@ -33,7 +34,7 @@ class ReserveController{
       if( !house.status ){
 
         return res.status( 422 ).json({ message: "Casa não disponivel!"})
-        
+
       }
 
       const reserve = await Reserve.create({
@@ -42,9 +43,10 @@ class ReserveController{
         house: house_id
       })
 
-      await House.updateOne( reserve )
+      await reserve.populate('house')
+      await reserve.populate( 'user')      
 
-      return res.json({ houseUser_id: house.user, user_id})
+      return res.json(reserve)
 
     } catch (error) {
       
