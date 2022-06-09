@@ -5,7 +5,7 @@ import User from "../models/User"
 
 class HouseControler {
 
-  async index (req, res){
+  async index ( req, res ){
     const {status } = req.query
 
     try {
@@ -27,7 +27,7 @@ class HouseControler {
     }
   }
 
-  async store(req, res){
+  async store ( req, res ){
 
     const { filename } = req.file
     const { description, price, location, status} = req.body
@@ -60,7 +60,7 @@ class HouseControler {
     }
   }
 
-  async update (req, res){
+  async update ( req, res ){
 
     const { house_id } = req.params
     
@@ -104,6 +104,32 @@ class HouseControler {
     
     
     
+  }
+
+  async destroy ( req, res ){
+
+    const { house_id } = req.body
+    const { user_id } = req.headers
+
+    try {
+
+      const house = await House.findById( house_id ).distinct( 'user' )
+      const user = await User.findById( user_id ).distinct( '_id' )
+
+      if( String(house) !== String(user) ){
+        return res.status( 422 ).json({ massage: "Usuário não tem permissão para deletar esta casa!"})
+      }
+      await House.deleteOne({ _id: house_id })
+      return res.json({ massage: "Casa deletada com sucesso!"})
+      
+    } catch (error) {
+
+      return res.status( 500 ).json(error.massage)
+
+    }
+
+    
+
   }
 
 }

@@ -16,6 +16,7 @@ routes.post( '/session', SessionController.store )
 routes.get( '/houses', HouseController.index )
 routes.post( '/houses', upload.single('thumbnail'), HouseController.store )
 routes.put( '/houses/:house_id',upload.single( 'thumbnail'), HouseController.update )
+routes.delete( '/houses', HouseController.destroy )
 
 
 export default routes
