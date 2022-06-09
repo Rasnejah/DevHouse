@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import express from 'express' 
 import mongoose from 'mongoose'
+import cors from 'cors'
 import path from 'path'
 import routes from './routes' 
 
@@ -23,6 +24,8 @@ class App {
     }
 
   middleware (){
+
+    this.server.use( cors() )
     this.server.use( express.json() )
     this.server.use(
       '/files',
