@@ -56,6 +56,30 @@ class ReserveController{
 
   }
 
+  async index ( req, res ){
+
+    const { user_id } = req.headers
+
+    try {
+      
+      const reserve = await Reserve.find({ user: user_id}).populate( 'house')
+
+      res.json( reserve )
+
+    } catch (error) {
+
+      return res.status( 500 ).json(error.message)
+
+    }
+    
+  }
+
+  async destroy ( req, res){
+
+    res.json({ ok: true })
+
+  }
+
 }
 
 export default new ReserveController()

@@ -22,7 +22,9 @@ routes.delete( '/houses', HouseController.destroy )
 
 routes.get( '/dashboard', DashbordController.show )
 
-routes.post( '/reservation', ReserveController.store)
+routes.post( '/reservation', ReserveController.store )
+routes.get( '/reservation', ReserveController.index )
+routes.delete( '/reservation', ReserveController.destroy )
 
 
 export default routes
