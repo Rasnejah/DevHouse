@@ -76,8 +76,36 @@ class ReserveController{
 
   async destroy ( req, res){
 
-    res.json({ ok: true })
+    const { user_id } = req.headers
+    const { reserve_id } = req.params
 
+    try {
+
+      const reserve = await Reserve.findById( reserve_id )
+
+      if( !reserve ){
+
+        return res.status( 422 ).json({ message: "reserva não encontrada"})
+
+      }
+      const user = String(reserve.user)
+      
+      if( user !== user_id ){
+
+        return res.status( 422 ).json({ message: "não autorizado!"})
+
+      }
+
+      await Reserve.findByIdAndDelete({ _id:reserve_id })
+
+      res.json({ message: "deletado com sucesso" })
+
+    } catch (error) {
+
+      return res.status( 500 ).json( error.message )
+
+    }
+    
   }
 
 }
