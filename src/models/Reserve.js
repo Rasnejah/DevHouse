@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose"
-import User from "./User"
+
 
 const ReserveSchema = new Schema({
   date: String,
@@ -13,4 +13,4 @@ const ReserveSchema = new Schema({
   }
 })
 
-export default model('User', ReserveSchema)
+export default model('Reserve', ReserveSchema)
